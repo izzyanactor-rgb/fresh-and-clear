@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fresh and Clear Dashboard - ChatGPT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #10a37f 0%, #1a7f64 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 600px;
+        }
+        
+        .header h1 {
+            color: #10a37f;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .chatgpt-badge {
+            display: inline-block;
+            background: #10a37f;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        .dashboard {
+            width: 100%;
+            max-width: 600px;
+            display: grid;
+            gap: 20px;
+        }
+        
+        .button {
+            background: white;
+            border: none;
+            border-radius: 15px;
+            padding: 30px;
+            font-size: 22px;
+            font-weight: bold;
+            color: #10a37f;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .button:active {
+            transform: translateY(-2px);
+        }
+        
+        .icon {
+            font-size: 36px;
+            min-width: 50px;
+            text-align: center;
+        }
+        
+        .button-text {
+            flex: 1;
+        }
+        
+        .help-button {
+            background: #10a37f;
+            color: white;
+        }
+        
+        .comfort-button {
+            background: #15b089;
+            color: white;
+        }
+        
+        .memory-button {
+            background: #FFB347;
+            color: white;
+        }
+        
+        .question-button {
+            background: #1a7f64;
+            color: white;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        
+        .modal-content h2 {
+            color: #10a37f;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .modal-content p {
+            color: #333;
+            font-size: 20px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .close-button {
+            background: #10a37f;
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .close-button:hover {
+            background: #0d8c6a;
+        }
+        
+        .copy-button {
+            background: #1a7f64;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+        
+        .copy-button:hover {
+            background: #15654f;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌟 Fresh and Clear</h1>
+        <p>Your gentle AI helper</p>
+        <span class="chatgpt-badge">For ChatGPT</span>
+    </div>
+    
+    <div class="dashboard">
+        <button class="button help-button" onclick="showMessage('help')">
+            <span class="icon">💡</span>
+            <span class="button-text">Help me find a word</span>
+        </button>
+        
+        <button class="button comfort-button" onclick="showMessage('confused')">
+            <span class="icon">🤗</span>
+            <span class="button-text">I'm feeling confused</span>
+        </button>
+        
+        <button class="button memory-button" onclick="showMessage('story')">
+            <span class="icon">📖</span>
+            <span class="button-text">Tell me a story</span>
+        </button>
+        
+        <button class="button question-button" onclick="showMessage('today')">
+            <span class="icon">📅</span>
+            <span class="button-text">What day is today?</span>
+        </button>
+        
+        <button class="button help-button" onclick="showMessage('time')">
+            <span class="icon">⏰</span>
+            <span class="button-text">What time is it?</span>
+        </button>
+        
+        <button class="button comfort-button" onclick="showMessage('talk')">
+            <span class="icon">💬</span>
+            <span class="button-text">I want to talk</span>
+        </button>
+        
+        <button class="button memory-button" onclick="showMessage('memory')">
+            <span class="icon">🌸</span>
+            <span class="button-text">Share a memory</span>
+        </button>
+        
+        <button class="button question-button" onclick="window.open('https://chat.openai.com', '_blank')">
+            <span class="icon">🤖</span>
+            <span class="button-text">Open ChatGPT</span>
+        </button>
+    </div>
+    
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-title">Message</h2>
+            <p id="modal-text">Text goes here</p>
+            <button class="close-button" onclick="closeModal()">OK</button>
+            <button class="copy-button" id="copy-button" onclick="copyToClipboard()" style="display: none;">Copy to use in ChatGPT</button>
+        </div>
+    </div>
+    
+    <script>
+        const messages = {
+            help: {
+                title: "Finding Words",
+                text: "That's okay! Take your time. Try describing what you're thinking about, or tell me the first letter. I'm here to help you find the right word.",
+                copyText: "I'm having trouble finding a word. Can you help me gently? Please use simple language and be patient with me."
+            },
+            confused: {
+                title: "It's Okay",
+                text: "Feeling confused is completely normal. Take a deep breath. You're safe. Let's take things one step at a time, nice and slow.",
+                copyText: "I'm feeling confused right now. Please speak slowly and use simple words. Help me feel calm and comfortable."
+            },
+            story: {
+                title: "Story Time",
+                text: "I'd love to tell you a story! Once upon a time, there was a beautiful garden where butterflies danced in the sunshine...",
+                copyText: "Please tell me a gentle, peaceful story. Keep it simple and happy. I love stories about nature and kind people."
+            },
+            today: {
+                title: "Today's Date",
+                text: "Today is " + new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+            },
+            time: {
+                title: "Current Time",
+                text: "Right now it's " + new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
+            },
+            talk: {
+                title: "Let's Talk",
+                text: "I'm here and ready to listen! What's on your mind? We can talk about anything you'd like.",
+                copyText: "I want to have a gentle conversation. Please be patient and kind. Use simple words and speak slowly."
+            },
+            memory: {
+                title: "Your Memories",
+                text: "I'd love to hear about your memories! What would you like to share? A favorite place? A special person? A happy time?",
+                copyText: "I'd like to share a memory with you. Please listen patiently and ask gentle questions to help me remember more details."
+            }
+        };
+        
+        let currentCopyText = '';
+        
+        function showMessage(type) {
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modal-title');
+            const text = document.getElementById('modal-text');
+            const copyButton = document.getElementById('copy-button');
+            
+            title.textContent = messages[type].title;
+            text.textContent = messages[type].text;
+            
+            if (messages[type].copyText) {
+                currentCopyText = messages[type].copyText;
+                copyButton.style.display = 'inline-block';
+            } else {
+                copyButton.style.display = 'none';
+            }
+            
+            modal.style.display = 'flex';
+        }
+        
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+        
+        function copyToClipboard() {
+            navigator.clipboard.writeText(currentCopyText).then(() => {
+                const copyButton = document.getElementById('copy-button');
+                const originalText = copyButton.textContent;
+                copyButton.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    copyButton.textContent = originalText;
+                }, 2000);
+            });
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
