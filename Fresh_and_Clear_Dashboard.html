@@ -143,7 +143,29 @@
             margin-bottom: 30px;
         }
         
-        .close-button {
+        .prompt-box {
+            background: #f4f7ff;
+            border: 2px solid #4A90E2;
+            border-radius: 12px;
+            padding: 18px;
+            font-size: 18px;
+            color: #222;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: left;
+            user-select: all;
+            cursor: text;
+            white-space: pre-wrap;
+        }
+
+        .prompt-label {
+            font-size: 14px;
+            color: #888;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .copy-button {
             background: #4A90E2;
             color: white;
             border: none;
@@ -152,10 +174,32 @@
             border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
+            width: 100%;
+            margin-bottom: 12px;
         }
-        
-        .close-button:hover {
+
+        .copy-button:active {
             background: #357ABD;
+        }
+
+        .copy-button.copied {
+            background: #50C878;
+        }
+
+        .close-button {
+            background: transparent;
+            color: #888;
+            border: 2px solid #ddd;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .close-button:active {
+            background: #f0f0f0;
         }
     </style>
 </head>
@@ -210,62 +254,95 @@
     <div id="modal" class="modal">
         <div class="modal-content">
             <h2 id="modal-title">Message</h2>
-            <p id="modal-text">Text goes here</p>
-            <button class="close-button" onclick="closeModal()">OK</button>
+            <p id="modal-text" style="display:none"></p>
+            <p id="prompt-label" class="prompt-label" style="display:none">Paste this into Gemma:</p>
+            <div id="prompt-box" class="prompt-box" style="display:none"></div>
+            <button id="copy-button" class="copy-button" style="display:none" onclick="copyPrompt()">Copy Prompt</button>
+            <button class="close-button" onclick="closeModal()">Close</button>
         </div>
     </div>
     
     <script>
         const messages = {
             help: {
-                title: "Finding Words",
-                text: "That's okay! Take your time. Try describing what you're thinking about, or tell me the first letter. I'm here to help you find the right word."
+                title: "💡 Help me find a word",
+                prompt: "I'm trying to think of a word but I can't remember it. Please help me find it by asking me one gentle question at a time — like what it means, what it starts with, or how it feels. Be patient and kind."
             },
             confused: {
-                title: "It's Okay",
-                text: "Feeling confused is completely normal. Take a deep breath. You're safe. Let's take things one step at a time, nice and slow."
+                title: "🤗 I'm feeling confused",
+                prompt: "I'm feeling a bit confused and overwhelmed right now. Please talk to me gently. Keep your words simple, short, and reassuring. Remind me that I'm safe and that it's okay to take things slowly."
             },
             story: {
-                title: "Story Time",
-                text: "I'd love to tell you a story! Once upon a time, there was a beautiful garden where butterflies danced in the sunshine..."
+                title: "📖 Tell me a story",
+                prompt: "Please tell me a warm, gentle, soothing short story. Something peaceful — maybe about nature, a garden, animals, or a quiet village. Keep the words simple and the mood calm and happy."
             },
             today: {
-                title: "Today's Date",
-                text: "Today is " + new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+                title: "📅 Today's Date",
+                direct: "Today is " + new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
             },
             time: {
-                title: "Current Time",
-                text: "Right now it's " + new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
+                title: "⏰ Current Time",
+                direct: "Right now it's " + new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })
             },
             talk: {
-                title: "Let's Talk",
-                text: "I'm here and ready to listen! What's on your mind? We can talk about anything you'd like."
+                title: "💬 I want to talk",
+                prompt: "I'd like to have a friendly conversation. Please start by asking me one simple, warm question about my day or something I enjoy. Be gentle, friendly, and easy to talk to."
             },
             memory: {
-                title: "Your Memories",
-                text: "I'd love to hear about your memories! What would you like to share? A favorite place? A special person? A happy time?"
+                title: "🌸 Share a memory",
+                prompt: "I'd like to talk about a happy memory. Please ask me one gentle question to help me start — like a favourite place I've been, someone I loved, or a time that made me smile."
             }
         };
-        
+
         function showMessage(type) {
+            const msg = messages[type];
             const modal = document.getElementById('modal');
             const title = document.getElementById('modal-title');
             const text = document.getElementById('modal-text');
-            
-            title.textContent = messages[type].title;
-            text.textContent = messages[type].text;
+            const promptLabel = document.getElementById('prompt-label');
+            const promptBox = document.getElementById('prompt-box');
+            const copyBtn = document.getElementById('copy-button');
+
+            title.textContent = msg.title;
+
+            if (msg.direct) {
+                text.textContent = msg.direct;
+                text.style.display = 'block';
+                promptLabel.style.display = 'none';
+                promptBox.style.display = 'none';
+                copyBtn.style.display = 'none';
+            } else {
+                text.style.display = 'none';
+                promptLabel.style.display = 'block';
+                promptBox.textContent = msg.prompt;
+                promptBox.style.display = 'block';
+                copyBtn.textContent = 'Copy Prompt';
+                copyBtn.className = 'copy-button';
+                copyBtn.style.display = 'block';
+            }
+
             modal.style.display = 'flex';
         }
-        
+
+        function copyPrompt() {
+            const text = document.getElementById('prompt-box').textContent;
+            const btn = document.getElementById('copy-button');
+            navigator.clipboard.writeText(text).then(() => {
+                btn.textContent = 'Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                    btn.textContent = 'Copy Prompt';
+                    btn.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
         function closeModal() {
             document.getElementById('modal').style.display = 'none';
         }
-        
-        // Close modal when clicking outside
+
         document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+            if (e.target === this) closeModal();
         });
     </script>
 </body>
