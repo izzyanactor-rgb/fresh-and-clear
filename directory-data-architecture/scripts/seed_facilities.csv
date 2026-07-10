@@ -1,5 +1,18 @@
 name,facility_type,city,website
-# Fill this in from the RHRA registry (https://www.rhra.ca/en/find-a-retirement-home/)
-# and the Ontario LTC Public Reporting dataset before running scrape_seed.py.
-# Example row (replace with real, verified data):
-# Example Memory Care Community,memory_care_community,Toronto,https://example.com
+# Seed list compiled 2026-07-10 from public web search results (names + websites
+# confirmed against each operator's own site or the ORCA/healthline directories).
+# License numbers and RHRA/MOH status are NOT yet verified — see
+# ../DATA_ACQUISITION_PLAN.md Step 1 and sources_to_load.md for the registry
+# cross-check that must happen before any listing goes live.
+Sagecare,memory_care_community,Toronto,https://www.sagecare.ca
+Cedarhurst Dementia Care Home,memory_care_community,Toronto,https://www.cedarhursthome.ca
+Alexis Lodge Retirement Residence,memory_care_community,Scarborough,https://www.alexislodge.com
+Memory & Company (Markham Club),adult_day_program,Markham,https://www.memoryandcompany.com
+Sunrise of Mississauga,retirement_home,Mississauga,https://www.sunriseseniorliving.ca/communities/on/sunrise-of-mississauga
+Amica City Centre,retirement_home,Mississauga,https://www.amica.ca/city-centre
+Aspira Villa Da Vinci Retirement Living,retirement_home,Vaughan,https://www.aspiralife.ca/our-locations/ontario/vaughan/aspira-villa-da-vinci-retirement-living
+Chartwell Oak Ridges,retirement_home,Richmond Hill,https://chartwell.com/on/richmond-hill/oak-ridges
+Delmanor Northtown,retirement_home,Toronto,https://delmanor.com
+Delmanor Prince Edward,retirement_home,Etobicoke,https://delmanor.com
+Delmanor Wynford,retirement_home,Toronto,https://delmanor.com
+Delmanor Elgin Mills,retirement_home,Richmond Hill,https://delmanor.com
