@@ -1,0 +1,5 @@
+name,facility_type,city,website
+# Fill this in from the RHRA registry (https://www.rhra.ca/en/find-a-retirement-home/)
+# and the Ontario LTC Public Reporting dataset before running scrape_seed.py.
+# Example row (replace with real, verified data):
+# Example Memory Care Community,memory_care_community,Toronto,https://example.com
