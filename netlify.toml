@@ -1,0 +1,6 @@
+# Netlify configuration for the Dementia Care Directory
+# Serves the site from the repo root and picks up the chat function
+# from the standard netlify/functions/ folder.
+[build]
+  publish = "."
+  functions = "netlify/functions"

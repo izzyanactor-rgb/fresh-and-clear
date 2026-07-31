@@ -1,0 +1,93 @@
+[
+  {
+    "name": "Alzheimer Society of Ontario",
+    "category": "Caregiver Education & Support Groups",
+    "phone": "416-967-5900",
+    "url": "https://alzheimer.ca/en/on",
+    "description": "They run the First Link referral program, support groups, and free dementia education across the province to help you understand what comes next after a diagnosis."
+  },
+  {
+    "name": "211 Ontario",
+    "category": "Government & Navigation",
+    "phone": "2-1-1",
+    "url": "https://211.ca",
+    "description": "Dial 2-1-1 anytime, in over 150 languages, to get connected to community and government services for dementia care, respite, and financial help near you."
+  },
+  {
+    "name": "Ontario Health atHome",
+    "category": "Home Care & PSW",
+    "phone": "1-833-515-1234",
+    "url": "https://www.ontariohealthathome.ca/",
+    "description": "This is the single provincial entry point for publicly funded home care — a care coordinator assesses your situation and arranges nursing, personal support, and therapy visits at home."
+  },
+  {
+    "name": "Ontario Health atHome — Adult Day Programs",
+    "category": "Day Programs",
+    "phone": "1-833-515-1234",
+    "url": "https://www.ontariohealthathome.ca/supportive-living/adult-day-programs/",
+    "description": "They coordinate supervised daytime programs across Ontario for people with dementia, giving your loved one social interaction and giving you a much-needed break."
+  },
+  {
+    "name": "Baycrest",
+    "category": "Day Programs",
+    "phone": "416-785-2500",
+    "url": "https://www.baycrest.org/",
+    "description": "A world-renowned Toronto campus offering dementia day programs, specialized clinics, long-term care, and a hospital focused on older adults."
+  },
+  {
+    "name": "Baycrest — Family Caregiving Innovations",
+    "category": "Caregiver Education & Support Groups",
+    "phone": "416-785-2500",
+    "url": "https://www.baycrest.org/care-services/family-caregiving-innovations/",
+    "description": "The Koschitzky Centre offers free caregiver webinars, practical tools for managing dementia behaviours, and a personalized caregiver resource assessment tool."
+  },
+  {
+    "name": "Circle of Care",
+    "category": "Home Care & PSW",
+    "phone": "416-635-2860",
+    "url": "https://www.circleofcare.com/",
+    "description": "A non-profit providing personal support workers, meal delivery, transportation, and caregiver support groups across Toronto and Southern York Region."
+  },
+  {
+    "name": "SPRINT Senior Care — Adult Day Program",
+    "category": "Day Programs",
+    "phone": "416-481-6411",
+    "url": "https://www.sprintseniorcare.org/programs-services/adult-day-program/",
+    "description": "A weekday program in East York where seniors with cognitive impairments enjoy art, music therapy, and gentle exercise while you get respite."
+  },
+  {
+    "name": "SPRINT Senior Care — Caregiver Relief and Support",
+    "category": "Respite Care",
+    "phone": "416-481-6411",
+    "url": "https://www.sprintseniorcare.org/programs-services/caregiver-relief-and-support-services/",
+    "description": "They offer caregiver support groups, respite through their day program, and home-care relief, all facilitated by a registered social worker."
+  },
+  {
+    "name": "Ontario Caregiver Organization",
+    "category": "Caregiver Education & Support Groups",
+    "phone": "1-833-416-2273",
+    "url": "https://www.ontariocaregiver.ca/",
+    "description": "A provincial organization with a toll-free helpline, free counselling, e-learning courses, and resources specifically for unpaid family caregivers."
+  },
+  {
+    "name": "Ontario Caregiver Organization — Peer Support",
+    "category": "Caregiver Education & Support Groups",
+    "phone": "1-833-416-2273",
+    "url": "https://www.ontariocaregiver.ca/supports-for-caregivers/peer-support/",
+    "description": "They match you with a trained volunteer who has been a caregiver themselves, for regular phone calls and online support groups where you can share your experience."
+  },
+  {
+    "name": "Toronto Seniors Helpline",
+    "category": "Crisis & Support Lines",
+    "phone": "416-217-2077",
+    "url": "https://www.torontoseniorshelpline.ca/",
+    "description": "Call this Toronto-only line 365 days a year for crisis support, caregiver resources, and connections to community services, with interpretation available in over 100 languages."
+  },
+  {
+    "name": "Toronto Central Healthline",
+    "category": "Government & Navigation",
+    "phone": "",
+    "url": "https://www.torontocentralhealthline.ca/",
+    "description": "A searchable online directory of every health and community service in Toronto Central, including respite care, day programs, and home care options."
+  }
+]

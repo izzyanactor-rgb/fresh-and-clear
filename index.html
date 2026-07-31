@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dementia Care Directory</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:          #eef3f0;   /* soft sage mist */
+    --surface:     #ffffff;
+    --surface-alt: #f6faf8;
+    --ink:         #26332f;   /* deep charcoal-green, softer than black */
+    --muted:       #5d6c67;
+    --primary:     #35736b;   /* calming eucalyptus teal */
+    --primary-dk:  #285a54;
+    --sage:        #dbe8e2;   /* pale sage */
+    --sage-line:   #b9d2c9;
+    --link:        #2c6f86;   /* calm sea blue */
+    --border:      #d6e2dc;
+    --shadow:      0 2px 10px rgba(40, 90, 84, 0.08);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--ink);
+    background:
+      radial-gradient(1200px 500px at 50% -200px, #e2efe9 0%, rgba(226,239,233,0) 70%),
+      var(--bg);
+    padding: 1.5rem 1rem 4rem;
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; }
+
+  /* ── Header ── */
+  header {
+    text-align: center;
+    background: linear-gradient(135deg, #3a7d74 0%, #2f6f81 100%);
+    color: #fff;
+    border-radius: 18px;
+    padding: 2.2rem 1.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 6px 22px rgba(40, 90, 84, 0.18);
+  }
+
+  header h1 {
+    font-size: 2.1rem;
+    letter-spacing: 0.2px;
+    margin-bottom: 0.4rem;
+  }
+
+  header p {
+    font-size: 1.12rem;
+    color: #e6f2ee;
+    max-width: 34rem;
+    margin: 0 auto;
+  }
+
+  section { margin-bottom: 2.75rem; }
+
+  section > h2 {
+    font-size: 1.55rem;
+    color: var(--primary-dk);
+    padding-bottom: 0.45rem;
+    margin-bottom: 1.15rem;
+    border-bottom: 3px solid var(--sage-line);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  /* ── Care Team Table ── */
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+
+  caption {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: left;
+    padding: 0.25rem 0 0.85rem;
+    color: var(--primary-dk);
+  }
+
+  th, td {
+    border-bottom: 1px solid var(--border);
+    padding: 0.7rem 0.8rem;
+    text-align: left;
+    vertical-align: top;
+    font-size: 1rem;
+  }
+
+  th {
+    background: var(--primary);
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border-bottom: none;
+  }
+
+  tbody tr:nth-child(even) td { background: var(--surface-alt); }
+  tbody tr:last-child td { border-bottom: none; }
+
+  td[contenteditable="true"]:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: -2px;
+    background: #eef6f3;
+  }
+
+  td[contenteditable="true"]:hover { background: #f0f7f4; }
+
+  /* ── Resources ── */
+  .resource-category { margin-bottom: 1.8rem; }
+
+  .resource-category > h3 {
+    font-size: 1.18rem;
+    color: var(--primary-dk);
+    background: var(--sage);
+    padding: 0.55rem 0.9rem;
+    border-radius: 10px;
+    border-left: 6px solid var(--primary);
+    margin-bottom: 0.8rem;
+  }
+
+  .resource-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1rem 1.15rem;
+    margin-bottom: 0.75rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+  }
+
+  .resource-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(40, 90, 84, 0.14);
+  }
+
+  .resource-card .name-link {
+    font-size: 1.12rem;
+    font-weight: 700;
+    color: var(--link);
+    text-decoration: none;
+  }
+  .resource-card .name-link:hover { text-decoration: underline; }
+
+  .resource-card .phone {
+    display: block;
+    font-size: 1.02rem;
+    color: var(--primary-dk);
+    font-weight: 600;
+    margin-top: 0.3rem;
+  }
+  .resource-card .phone a { color: inherit; text-decoration: none; }
+
+  .resource-card .description {
+    display: block;
+    font-size: 0.97rem;
+    color: var(--muted);
+    margin-top: 0.35rem;
+  }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .friendly-error {
+    background: #fff6e6;
+    border: 1px solid #e6cf8f;
+    padding: 1rem 1.25rem;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    color: #6a5010;
+  }
+
+  /* ── Ask (chat) ── */
+  #chat-box {
+    background: var(--surface);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  #chat-log {
+    max-height: 340px;
+    overflow-y: auto;
+    padding: 1rem 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .chat-msg {
+    padding: 0.6rem 0.85rem;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 85%;
+  }
+  .chat-assistant { background: var(--sage); color: var(--ink); align-self: flex-start; }
+  .chat-user { background: var(--primary); color: #fff; align-self: flex-end; }
+  .chat-loading { color: var(--muted); font-style: italic; align-self: flex-start; }
+  #chat-form {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-top: 1px solid var(--border);
+    background: var(--surface-alt);
+  }
+  #chat-input {
+    flex: 1;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.95rem;
+  }
+  #chat-input:focus { outline: 2px solid var(--primary); outline-offset: -1px; }
+  #chat-form button {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 0 1.2rem;
+    border-radius: 999px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #chat-form button:hover { background: var(--primary-dk); }
+  #chat-form button:disabled { opacity: 0.6; cursor: default; }
+  @media print { #ask { display: none; } }
+
+  /* ── Phone adjustments ── */
+  @media (max-width: 600px) {
+    body { font-size: 18px; padding: 1rem 0.6rem 3rem; }
+    header { padding: 1.8rem 1.15rem; }
+    header h1 { font-size: 1.75rem; }
+    th, td { padding: 0.55rem 0.5rem; font-size: 0.92rem; }
+    table, thead, tbody, tr, td { display: block; width: 100%; }
+    thead { display: none; }
+    tr { margin-bottom: 0; }
+    td { border: none; border-bottom: 1px solid #eef2f0; }
+    tbody tr { border-bottom: 1px solid var(--border); }
+    td::before {
+      content: attr(data-label) " ";
+      font-weight: 700;
+      color: var(--primary-dk);
+    }
+  }
+
+  /* ── Print ── */
+  @media print {
+    body { font-size: 12pt; background: #fff; color: #000; padding: 0; }
+    .wrap { max-width: none; }
+    header {
+      background: none; color: #000;
+      border: 2px solid #000; border-radius: 0;
+      box-shadow: none; padding: 0.6rem;
+    }
+    header p { color: #000; }
+    section > h2 { color: #000; border-bottom: 2px solid #000; }
+    th { background: #000; color: #fff; }
+    td, th { border: 1px solid #000; }
+    .resource-card { border: 1px solid #000; border-radius: 0; box-shadow: none; }
+    .resource-category > h3 { background: none; border-left: 4px solid #000; border-radius: 0; color: #000; }
+    .resource-card .name-link, .resource-card .phone { color: #000; }
+    a[href]::after {
+      content: " (" attr(href) ")";
+      font-size: 10pt; word-break: break-all; color: #000;
+    }
+    .friendly-error { background: none; border: 1px solid #000; color: #000; }
+    table, thead, tbody, tr, td { display: revert; }
+    th, td { padding: 0.3rem; font-size: 11pt; }
+    footer { color: #000; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Dementia Care Directory</h1>
+  <p>A calm, printable reference for care contacts and resources.</p>
+</header>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 1: Care Team                              -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="care-team">
+  <h2>Section 1 — Care Team</h2>
+  <table>
+    <caption>Your Care Team</caption>
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Role</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td data-label="Name" contenteditable="true"></td>
+        <td data-label="Role" contenteditable="true">Family Doctor</td>
+        <td data-label="Phone" contenteditable="true"></td>
+        <td data-label="Notes" contenteditable="true"></td>
+      </tr>
+      <tr>
+        <td data-label="Name" contenteditable="true"></td>
+        <td data-label="Role" contenteditable="true">Pharmacy</td>
+        <td data-label="Phone" contenteditable="true"></td>
+        <td data-label="Notes" contenteditable="true"></td>
+      </tr>
+      <tr>
+        <td data-label="Name" contenteditable="true"></td>
+        <td data-label="Role" contenteditable="true">PSW Agency</td>
+        <td data-label="Phone" contenteditable="true"></td>
+        <td data-label="Notes" contenteditable="true"></td>
+      </tr>
+      <tr>
+        <td data-label="Name" contenteditable="true"></td>
+        <td data-label="Role" contenteditable="true">Case Coordinator</td>
+        <td data-label="Phone" contenteditable="true"></td>
+        <td data-label="Notes" contenteditable="true"></td>
+      </tr>
+      <tr>
+        <td data-label="Name" contenteditable="true"></td>
+        <td data-label="Role" contenteditable="true">Emergency Contact</td>
+        <td data-label="Phone" contenteditable="true"></td>
+        <td data-label="Notes" contenteditable="true"></td>
+      </tr>
+      <tr>
+        <td data-label="Name" contenteditable="true"></td>
+        <td data-label="Role" contenteditable="true"></td>
+        <td data-label="Phone" contenteditable="true"></td>
+        <td data-label="Notes" contenteditable="true"></td>
+      </tr>
+      <tr>
+        <td data-label="Name" contenteditable="true"></td>
+        <td data-label="Role" contenteditable="true"></td>
+        <td data-label="Phone" contenteditable="true"></td>
+        <td data-label="Notes" contenteditable="true"></td>
+      </tr>
+      <tr>
+        <td data-label="Name" contenteditable="true"></td>
+        <td data-label="Role" contenteditable="true"></td>
+        <td data-label="Phone" contenteditable="true"></td>
+        <td data-label="Notes" contenteditable="true"></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- SECTION 2: Resources                             -->
+<!-- ═══════════════════════════════════════════════ -->
+<section id="resources">
+  <h2>Section 2 — Resources</h2>
+  <div id="resource-list">
+    <p style="color:#666;">Loading resources…</p>
+  </div>
+</section>
+
+<section id="ask">
+  <h2>Section 3 — Ask About These Resources</h2>
+  <div id="chat-box">
+    <div id="chat-log">
+      <div class="chat-msg chat-assistant">Ask me anything about the resources listed above — I'll only answer from what's actually on this page.</div>
+    </div>
+    <form id="chat-form">
+      <input id="chat-input" type="text" placeholder="e.g. what helps with respite care?" autocomplete="off" />
+      <button type="submit">Ask</button>
+    </form>
+  </div>
+</section>
+
+<footer>A calm reference for caregivers · Toronto &amp; Ontario</footer>
+
+</div>
+
+<script>window.__RESOURCES__ = [
+  {
+    "name": "Alzheimer Society of Ontario",
+    "category": "Caregiver Education & Support Groups",
+    "phone": "416-967-5900",
+    "url": "https://alzheimer.ca/en/on",
+    "description": "They run the First Link referral program, support groups, and free dementia education across the province to help you understand what comes next after a diagnosis."
+  },
+  {
+    "name": "211 Ontario",
+    "category": "Government & Navigation",
+    "phone": "2-1-1",
+    "url": "https://211.ca",
+    "description": "Dial 2-1-1 anytime, in over 150 languages, to get connected to community and government services for dementia care, respite, and financial help near you."
+  },
+  {
+    "name": "Ontario Health atHome",
+    "category": "Home Care & PSW",
+    "phone": "1-833-515-1234",
+    "url": "https://www.ontariohealthathome.ca/",
+    "description": "This is the single provincial entry point for publicly funded home care — a care coordinator assesses your situation and arranges nursing, personal support, and therapy visits at home."
+  },
+  {
+    "name": "Ontario Health atHome — Adult Day Programs",
+    "category": "Day Programs",
+    "phone": "1-833-515-1234",
+    "url": "https://www.ontariohealthathome.ca/supportive-living/adult-day-programs/",
+    "description": "They coordinate supervised daytime programs across Ontario for people with dementia, giving your loved one social interaction and giving you a much-needed break."
+  },
+  {
+    "name": "Baycrest",
+    "category": "Day Programs",
+    "phone": "416-785-2500",
+    "url": "https://www.baycrest.org/",
+    "description": "A world-renowned Toronto campus offering dementia day programs, specialized clinics, long-term care, and a hospital focused on older adults."
+  },
+  {
+    "name": "Baycrest — Family Caregiving Innovations",
+    "category": "Caregiver Education & Support Groups",
+    "phone": "416-785-2500",
+    "url": "https://www.baycrest.org/care-services/family-caregiving-innovations/",
+    "description": "The Koschitzky Centre offers free caregiver webinars, practical tools for managing dementia behaviours, and a personalized caregiver resource assessment tool."
+  },
+  {
+    "name": "Circle of Care",
+    "category": "Home Care & PSW",
+    "phone": "416-635-2860",
+    "url": "https://www.circleofcare.com/",
+    "description": "A non-profit providing personal support workers, meal delivery, transportation, and caregiver support groups across Toronto and Southern York Region."
+  },
+  {
+    "name": "SPRINT Senior Care — Adult Day Program",
+    "category": "Day Programs",
+    "phone": "416-481-6411",
+    "url": "https://www.sprintseniorcare.org/programs-services/adult-day-program/",
+    "description": "A weekday program in East York where seniors with cognitive impairments enjoy art, music therapy, and gentle exercise while you get respite."
+  },
+  {
+    "name": "SPRINT Senior Care — Caregiver Relief and Support",
+    "category": "Respite Care",
+    "phone": "416-481-6411",
+    "url": "https://www.sprintseniorcare.org/programs-services/caregiver-relief-and-support-services/",
+    "description": "They offer caregiver support groups, respite through their day program, and home-care relief, all facilitated by a registered social worker."
+  },
+  {
+    "name": "Ontario Caregiver Organization",
+    "category": "Caregiver Education & Support Groups",
+    "phone": "1-833-416-2273",
+    "url": "https://www.ontariocaregiver.ca/",
+    "description": "A provincial organization with a toll-free helpline, free counselling, e-learning courses, and resources specifically for unpaid family caregivers."
+  },
+  {
+    "name": "Ontario Caregiver Organization — Peer Support",
+    "category": "Caregiver Education & Support Groups",
+    "phone": "1-833-416-2273",
+    "url": "https://www.ontariocaregiver.ca/supports-for-caregivers/peer-support/",
+    "description": "They match you with a trained volunteer who has been a caregiver themselves, for regular phone calls and online support groups where you can share your experience."
+  },
+  {
+    "name": "Toronto Seniors Helpline",
+    "category": "Crisis & Support Lines",
+    "phone": "416-217-2077",
+    "url": "https://www.torontoseniorshelpline.ca/",
+    "description": "Call this Toronto-only line 365 days a year for crisis support, caregiver resources, and connections to community services, with interpretation available in over 100 languages."
+  },
+  {
+    "name": "Toronto Central Healthline",
+    "category": "Government & Navigation",
+    "phone": "",
+    "url": "https://www.torontocentralhealthline.ca/",
+    "description": "A searchable online directory of every health and community service in Toronto Central, including respite care, day programs, and home care options."
+  }
+]
+;</script>
+<script>
+(function () {
+  "use strict";
+
+  var container = document.getElementById("resource-list");
+
+  function showError() {
+    container.innerHTML =
+      '<div class="friendly-error">' +
+      "<p style=\"font-weight:700;margin-bottom:0.4rem;\">Could not load resources.</p>" +
+      "<p>This page needs to be opened through a local web server so it can read " +
+      "<code>resources.json</code> from the same folder.</p>" +
+      "</div>";
+  }
+
+  function renderResources(entries) {
+    var groups = {};
+    var order = [];
+
+    entries.forEach(function (item) {
+      var cat = (item.category || "Uncategorized").trim();
+      if (!groups[cat]) {
+        groups[cat] = [];
+        order.push(cat);
+      }
+      groups[cat].push(item);
+    });
+
+    var html = "";
+
+    order.forEach(function (cat) {
+      html += '<div class="resource-category">';
+      html += "<h3>" + escapeHtml(cat) + "</h3>";
+
+      groups[cat].forEach(function (item) {
+        var name = escapeHtml(item.name || "Untitled");
+        var phone = escapeHtml(item.phone || "");
+        var desc = escapeHtml(item.description || "");
+        var safeUrl = item.url ? escapeHtml(item.url) : "#";
+        var telHref = phone ? phone.replace(/[^0-9+]/g, "") : "";
+
+        html += '<div class="resource-card">';
+        html += '<a class="name-link" href="' + safeUrl + '" target="_blank" rel="noopener">' + name + "</a>";
+        if (phone) {
+          html += '<span class="phone">Phone: ' +
+            (telHref ? '<a href="tel:' + telHref + '">' + phone + "</a>" : phone) +
+            "</span>";
+        }
+        if (desc) {
+          html += '<span class="description">' + desc + "</span>";
+        }
+        html += "</div>";
+      });
+
+      html += "</div>";
+    });
+
+    container.innerHTML = html;
+  }
+
+  function escapeHtml(str) {
+    if (typeof str !== "string") str = String(str);
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  Promise.resolve({ok:true,json:function(){return Promise.resolve(window.__RESOURCES__);}})
+    .then(function (res) {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      return res.json();
+    })
+    .then(function (data) {
+      if (!Array.isArray(data)) throw new Error("Expected an array");
+      if (data.length === 0) {
+        container.innerHTML = "<p>No resources found.</p>";
+        return;
+      }
+      renderResources(data);
+    })
+    .catch(function (err) {
+      console.error("Failed to load resources:", err);
+      showError();
+    });
+})();
+
+(function () {
+  var log = document.getElementById("chat-log");
+  var form = document.getElementById("chat-form");
+  var input = document.getElementById("chat-input");
+  var history = [];
+
+  function addMessage(role, text) {
+    var div = document.createElement("div");
+    div.className = "chat-msg " + (role === "user" ? "chat-user" : "chat-assistant");
+    div.textContent = text;
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+    return div;
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var question = input.value.trim();
+    if (!question) return;
+
+    addMessage("user", question);
+    history.push({ role: "user", content: question });
+    input.value = "";
+
+    var loadingEl = document.createElement("div");
+    loadingEl.className = "chat-msg chat-loading";
+    loadingEl.textContent = "Thinking…";
+    log.appendChild(loadingEl);
+    log.scrollTop = log.scrollHeight;
+
+    var submitBtn = form.querySelector("button");
+    submitBtn.disabled = true;
+
+    fetch("/.netlify/functions/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: history }),
+    })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        loadingEl.remove();
+        var reply = data.reply || "Sorry, I couldn't get an answer just now — try again in a moment.";
+        addMessage("assistant", reply);
+        history.push({ role: "assistant", content: reply });
+      })
+      .catch(function () {
+        loadingEl.remove();
+        addMessage("assistant", "Something went wrong reaching the assistant. Try again in a moment.");
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+      });
+  });
+})();
+</script>
+
+</body>
+</html>
