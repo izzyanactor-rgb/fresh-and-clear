@@ -1,0 +1,16 @@
+{
+  "name": "izzy-tools",
+  "owner": { "name": "Izzy" },
+  "metadata": {
+    "description": "Izzy's own plugin marketplace.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "die-inspector",
+      "source": "./plugins/die-inspector",
+      "version": "0.1.0",
+      "description": "DIE Inspector — Diagnose / Isolate / Execute audit discipline for AI and code workflows: phase-gated rubric skill plus an /audit command."
+    }
+  ]
+}
