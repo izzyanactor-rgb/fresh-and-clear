@@ -1,0 +1,7 @@
+{
+  "name": "die-inspector",
+  "version": "0.1.0",
+  "description": "DIE Inspector — a Diagnose / Isolate / Execute audit discipline for AI and code workflows. Phase-gated, evidence-grounded, one-variable-at-a-time, always reversible. Ships the private rubric skill plus an /audit command.",
+  "author": { "name": "Izzy" },
+  "keywords": ["audit", "evals", "diagnose", "debugging", "ai-workflows", "guardrails", "die"]
+}

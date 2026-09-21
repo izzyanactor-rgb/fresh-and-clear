@@ -5,6 +5,12 @@
         "source": "github",
         "repo": "openai/codex-plugin-cc"
       }
+    },
+    "izzy-tools": {
+      "source": {
+        "source": "github",
+        "repo": "izzyanactor-rgb/fresh-and-clear"
+      }
     }
   }
 }
